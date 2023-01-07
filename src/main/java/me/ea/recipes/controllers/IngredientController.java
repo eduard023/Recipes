@@ -19,7 +19,7 @@ public class IngredientController {
         this.ingredientServices = ingredientServices;
     }
 //Добавление ингредиета
-    @PostMapping("/addIngredient")
+    @PostMapping
     public ResponseEntity<String> addIngredient(String id, @RequestBody Ingredient ingredient){
         this.ingredientServices.addIngredient(id, ingredient);
         return ResponseEntity.ok("Ингредиент добавлен");
@@ -30,19 +30,19 @@ public class IngredientController {
         this.ingredientServices.getIngredient(id);
     }
 //Обновление ингредиета
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<String> updateIngredient(@PathVariable String id, @RequestBody Ingredient ingredient){
         this.ingredientServices.updateIngredient(id, ingredient);
         return ResponseEntity.ok("Ингердиент обновлен");
     }
 
 //Удаление ингредиента
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable String id){
         ingredientServices.deleteIngredient(id);
     }
 
-    @GetMapping("/allIngredients")
+    @GetMapping()
     public ResponseEntity<List<Ingredient>> getAllIngredients(){
         List<Ingredient> ingredientList = ingredientServices.getAllIngredient();
         return ResponseEntity.ok(ingredientList);

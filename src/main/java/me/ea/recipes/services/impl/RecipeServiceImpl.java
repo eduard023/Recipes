@@ -48,11 +48,11 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllRecipe() {
-        List<Recipe> s = new ArrayList<>();
+        List<Recipe> result = new ArrayList<>();
         for (Map.Entry<String, Recipe> recipeEntry : recipeMap.entrySet()){
-            s.add(recipeEntry.getValue());
+            result.add(recipeEntry.getValue());
         }
-        return s;
+        return result;
     }
 
 }

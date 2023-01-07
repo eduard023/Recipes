@@ -20,7 +20,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 //Добавление рецепта
-    @PostMapping("/addRecipe")
+    @PostMapping
     public ResponseEntity<String> addRecipe(String id, @RequestBody Recipe recipe){
         this.recipeService.addRecipe(id, recipe);
         return ResponseEntity.ok("Рецепт добавлен");
@@ -33,19 +33,19 @@ public class RecipeController {
     }
 
 //Обновление рецепта
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<String> updateRecipe(@PathVariable String id, @RequestBody Recipe recipe){
         this.recipeService.updateRecipe(id, recipe);
         return ResponseEntity.ok("Рецепт обновлен");
     }
 
 //Удаление рецепта
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable String id){
         recipeService.deleteRecipe(id);
     }
 
-    @GetMapping("/allRecipe")
+    @GetMapping
     public ResponseEntity<List<Recipe>> getAllRecipe(){
         List<Recipe> recipe = recipeService.getAllRecipe();
         return ResponseEntity.ok(recipe);

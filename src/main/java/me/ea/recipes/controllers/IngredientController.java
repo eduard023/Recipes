@@ -2,9 +2,11 @@ package me.ea.recipes.controllers;
 
 import me.ea.recipes.model.Ingredient;;
 import me.ea.recipes.services.impl.IngredientServicesImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -16,13 +18,34 @@ public class IngredientController {
     public IngredientController(IngredientServicesImpl ingredientServices) {
         this.ingredientServices = ingredientServices;
     }
-
+//Добавление ингредиета
     @PostMapping
-    public Ingredient createIngredient(String id, @RequestBody Ingredient ingredient){
-        return this.ingredientServices.addIngredient(id, ingredient);
+    public ResponseEntity<String> addIngredient(String id, @RequestBody Ingredient ingredient){
+        this.ingredientServices.addIngredient(id, ingredient);
+        return ResponseEntity.ok("Ингредиент добавлен");
+    }
+//Получение id ингредиета
+    @GetMapping("/id")
+    public void getIngredient(@RequestBody String id){
+        this.ingredientServices.getIngredient(id);
+    }
+//Обновление ингредиета
+    @PutMapping("{id}")
+    public ResponseEntity<String> updateIngredient(@PathVariable String id, @RequestBody Ingredient ingredient){
+        this.ingredientServices.updateIngredient(id, ingredient);
+        return ResponseEntity.ok("Ингердиент обновлен");
     }
 
-    public Set<String> getAllIngredient(@PathVariable("id") String id){
-        return Collections.singleton(this.ingredientServices.getIngredient(id).toString());
+//Удаление ингредиента
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable String id){
+        ingredientServices.deleteIngredient(id);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<Ingredient>> getAllIngredients(){
+        List<Ingredient> ingredientList = ingredientServices.getAllIngredient();
+        return ResponseEntity.ok(ingredientList);
+    }
+
 }

@@ -32,7 +32,7 @@ public class RecipeServiceImpl implements RecipeService {
             saveToFile();
             return recipe;
         }else {
-            throw new IdException();
+            throw new RuntimeException("id уже существует");
         }
     }
 
@@ -41,7 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeMap.containsKey(id)){
             return recipeMap.get(id);
         }else{
-            throw new IdException();
+            throw new RuntimeException("id не найден");
         }
     }
 
@@ -52,7 +52,7 @@ public class RecipeServiceImpl implements RecipeService {
             saveToFile();
             return recipe;
         }else {
-            throw new IdException();
+            throw new RuntimeException("id не найден");
         }
     }
 
@@ -61,7 +61,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeMap.containsKey(id)){
             return recipeMap.remove(id);
         }else {
-            throw new IdException();
+            throw new RuntimeException("id не существует");
         }
     }
 

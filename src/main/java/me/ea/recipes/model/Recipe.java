@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.util.List;
 
 @Data
@@ -15,4 +16,64 @@ public class Recipe {
     private List<Ingredient> ingredientList;
     private List<String> cookingSteps;
 
+    public Recipe(String name, int cookingTime, List<Ingredient> ingredientList, List<String> cookingSteps) {
+        this.name = name;
+        this.cookingTime = cookingTime;
+        this.ingredientList = ingredientList;
+        this.cookingSteps = cookingSteps;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCookingTime() {
+        return cookingTime;
+    }
+
+    public void setCookingTime(int cookingTime) {
+        this.cookingTime = cookingTime;
+    }
+
+    public List<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(List<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
+
+    public List<String> getCookingSteps() {
+        return cookingSteps;
+    }
+
+    public void setCookingSteps(List<String> cookingSteps) {
+        this.cookingSteps = cookingSteps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return cookingTime == recipe.cookingTime && Objects.equals(name, recipe.name) && Objects.equals(ingredientList, recipe.ingredientList) && Objects.equals(cookingSteps, recipe.cookingSteps);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cookingTime, ingredientList, cookingSteps);
+    }
+
+    @Override
+    public String toString() {
+        return "Рецепт:" +
+                "Название-'" + name + '\'' +
+                ", Время приготовления-" + cookingTime +
+                ", Ингредиенты-" + ingredientList +
+                ", Шаги приготовления-" + cookingSteps;
+    }
 }

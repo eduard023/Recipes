@@ -1,7 +1,6 @@
 package me.ea.recipes.services.impl;
 
 import me.ea.recipes.model.Ingredient;
-import me.ea.recipes.services.IdException;
 import me.ea.recipes.services.IngredientService;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (!ingredientMap.containsKey(id)){
             return ingredientMap.put(id, ingredient);
         }else {
-            throw new IdException();
+            throw new RuntimeException("id уже существует");
         }
     }
 
@@ -27,7 +26,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (ingredientMap.containsKey(id)){
             return ingredientMap.get(id);
         }else {
-            throw new IdException();
+            throw new RuntimeException("id не найден");
         }
     }
 
@@ -36,7 +35,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (ingredientMap.containsKey(id)){
             return ingredientMap.put(id, ingredient);
         }else {
-            throw new IdException();
+            throw new RuntimeException("id не найден");
         }
     }
 
@@ -45,7 +44,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (ingredientMap.containsKey(id)){
             return ingredientMap.remove(id);
         }else {
-            throw new IdException();
+            throw new RuntimeException("id не существует");
         }
     }
 

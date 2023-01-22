@@ -37,7 +37,7 @@ public class IngredientServicesImpl implements IngredientService {
             saveToFile();
             return ingredient;
         }else {
-            throw new RuntimeException("id уже существует");
+            throw new IdException();
         }
     }
 
@@ -46,7 +46,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (ingredientMap.containsKey(id)){
             return ingredientMap.get(id);
         }else {
-            throw new RuntimeException("id не найден");
+            throw new IdException();
         }
     }
 
@@ -57,7 +57,7 @@ public class IngredientServicesImpl implements IngredientService {
             saveToFile();
             return ingredient;
         }else {
-            throw new RuntimeException("id не найден");
+            throw new IdException();
         }
     }
 
@@ -66,7 +66,7 @@ public class IngredientServicesImpl implements IngredientService {
         if (ingredientMap.containsKey(id)){
             return ingredientMap.remove(id);
         }else {
-            throw new RuntimeException("id не существует");
+            throw new IdException();
         }
     }
 

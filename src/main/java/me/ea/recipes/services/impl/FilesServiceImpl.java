@@ -1,5 +1,6 @@
 package me.ea.recipes.services.impl;
 
+import me.ea.recipes.exception.FileException;
 import me.ea.recipes.services.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,14 +11,15 @@ import java.nio.file.Path;
 
 @Service
 public class FilesServiceImpl implements FilesService {
-@Value("${path.to.data.files}")
+    @Value("${path.to.data.files}")
     private String dataFilePath;
-@Value("${name1.of.data.files}")
+    @Value("${name1.of.data.files}")
     private String dataFileName;
-@Value("${name2.of.data.files}")
+    @Value("${name2.of.data.files}")
     private String recipeDataFileName;
-@Override
-    public boolean saveToFile(String json){
+
+    @Override
+    public boolean saveToFile(String json) {
         try {
             cleanDataFile();
             Files.writeString(Path.of(dataFilePath, dataFileName), json);
@@ -28,16 +30,17 @@ public class FilesServiceImpl implements FilesService {
         }
 
     }
-@Override
-    public String readFromFiles(){
+
+    @Override
+    public String readFromFiles() {
         try {
             return Files.readString(Path.of(dataFilePath, dataFileName));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileException();
         }
     }
 
-    private boolean cleanDataFile(){
+    private boolean cleanDataFile() {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, dataFileName));
             Files.createFile(Path.of(dataFilePath, dataFileName));
@@ -49,7 +52,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     //Файловый сервис для рецепта
-    private boolean cleanRecipeDataFile(){
+    private boolean cleanRecipeDataFile() {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, recipeDataFileName));
             Files.createFile(Path.of(dataFilePath, recipeDataFileName));
@@ -61,16 +64,16 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public String readFromRecipeFiles(){
+    public String readFromRecipeFiles() {
         try {
             return Files.readString(Path.of(dataFilePath, recipeDataFileName));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileException();
         }
     }
 
     @Override
-    public boolean saveToRecipeFile(String json){
+    public boolean saveToRecipeFile(String json) {
         try {
             cleanRecipeDataFile();
             Files.writeString(Path.of(dataFilePath, recipeDataFileName), json);

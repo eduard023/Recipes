@@ -8,8 +8,12 @@ import java.util.List;
 public interface RecipeService {
 
     Recipe addRecipe(String id, Recipe recipe);
+
     Recipe getRecipe(String id);
+
     Recipe updateRecipe(String id, Recipe recipe);
+
     Recipe deleteRecipe(String id);
+
     List<Recipe> getAllRecipe();
 }

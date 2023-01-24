@@ -5,6 +5,7 @@ import me.ea.recipes.services.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +15,7 @@ public class FilesServiceImpl implements FilesService {
     @Value("${path.to.data.files}")
     private String dataFilePath;
     @Value("${name1.of.data.files}")
-    private String dataFileName;
+    private String ingredientDataFileName;
     @Value("${name2.of.data.files}")
     private String recipeDataFileName;
 
@@ -22,7 +23,7 @@ public class FilesServiceImpl implements FilesService {
     public boolean saveToFile(String json) {
         try {
             cleanDataFile();
-            Files.writeString(Path.of(dataFilePath, dataFileName), json);
+            Files.writeString(Path.of(dataFilePath, ingredientDataFileName), json);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,16 +35,16 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public String readFromFiles() {
         try {
-            return Files.readString(Path.of(dataFilePath, dataFileName));
+            return Files.readString(Path.of(dataFilePath, ingredientDataFileName));
         } catch (IOException e) {
             throw new FileException();
         }
     }
-
-    private boolean cleanDataFile() {
+@Override
+    public boolean cleanDataFile() {
         try {
-            Files.deleteIfExists(Path.of(dataFilePath, dataFileName));
-            Files.createFile(Path.of(dataFilePath, dataFileName));
+            Files.deleteIfExists(Path.of(dataFilePath, ingredientDataFileName));
+            Files.createFile(Path.of(dataFilePath, ingredientDataFileName));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,8 +52,8 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    //Файловый сервис для рецепта
-    private boolean cleanRecipeDataFile() {
+ @Override   //Файловый сервис для рецепта
+    public boolean cleanRecipeDataFile() {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, recipeDataFileName));
             Files.createFile(Path.of(dataFilePath, recipeDataFileName));
@@ -83,6 +84,14 @@ public class FilesServiceImpl implements FilesService {
             return false;
         }
 
+    }
+@Override
+    public File getRecipeDataFile(){
+        return new File(dataFilePath+"/"+recipeDataFileName);
+    }
+@Override
+    public File getIngredientDataFile(){
+        return new File(dataFilePath+"/"+ ingredientDataFileName);
     }
 
 }

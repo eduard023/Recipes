@@ -4,6 +4,7 @@ import me.ea.recipes.exception.FileException;
 import me.ea.recipes.services.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +14,12 @@ import java.nio.file.Path;
 @Service
 public class FilesServiceImpl implements FilesService {
     @Value("${path.to.data.files}")
-    private String dataFilePath;
+    public String dataFilePath;
     @Value("${name1.of.data.files}")
     private String ingredientDataFileName;
     @Value("${name2.of.data.files}")
     private String recipeDataFileName;
+
 
     @Override
     public boolean saveToFile(String json) {
@@ -40,7 +42,8 @@ public class FilesServiceImpl implements FilesService {
             throw new FileException();
         }
     }
-@Override
+
+    @Override
     public boolean cleanDataFile() {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, ingredientDataFileName));
@@ -52,7 +55,7 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
- @Override   //Файловый сервис для рецепта
+    @Override   //Файловый сервис для рецепта
     public boolean cleanRecipeDataFile() {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, recipeDataFileName));
@@ -85,13 +88,15 @@ public class FilesServiceImpl implements FilesService {
         }
 
     }
-@Override
-    public File getRecipeDataFile(){
-        return new File(dataFilePath+"/"+recipeDataFileName);
+
+    @Override
+    public File getRecipeDataFile() {
+        return new File(dataFilePath + "/" + recipeDataFileName);
     }
-@Override
-    public File getIngredientDataFile(){
-        return new File(dataFilePath+"/"+ ingredientDataFileName);
+
+    @Override
+    public File getIngredientDataFile() {
+        return new File(dataFilePath + "/" + ingredientDataFileName);
     }
 
 }

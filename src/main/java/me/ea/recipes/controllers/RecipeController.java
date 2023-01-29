@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import me.ea.recipes.model.Ingredient;
 import me.ea.recipes.model.Recipe;
 import me.ea.recipes.services.impl.RecipeServiceImpl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -114,6 +116,21 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> getAllRecipe() {
         List<Recipe> recipe = recipeService.getAllRecipe();
         return ResponseEntity.ok(recipe);
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadTxt() {
+        byte[] bytes = recipeService.downloadTxt();
+        if (bytes == null) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .contentLength(bytes.length)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"recipes.txt\"")
+                .body(bytes);
+
+
     }
 
 

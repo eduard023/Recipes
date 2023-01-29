@@ -16,4 +16,6 @@ public interface RecipeService {
     Recipe deleteRecipe(String id);
 
     List<Recipe> getAllRecipe();
+
+    byte[] downloadTxt();
 }
